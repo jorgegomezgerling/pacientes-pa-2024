@@ -1,7 +1,7 @@
 import { useState } from "react"
 
 
-export const Formulario = () => {
+export const Formulario = ({ pacientes, setPacientes }) => {
 
   const [nombre, setNombre] = useState('')
   const [propietario, setPropietario] = useState('')
@@ -10,16 +10,49 @@ export const Formulario = () => {
   const [hora, setHora] = useState('')
   const [sintomas, setSintomas] = useState('')
 
+  const [error, setError] = useState(false)
 
-handleSubmit = (e) => {
-  e.preventDefault()
-  // Validar
-  // Asignar un ID
-  // Crear la cita
-  //mostrar la cita en CONSOLA
-  // Reiniciar el form
-}
 
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    
+    //validar que los campos esten llenos
+    if([nombre, propietario, telefono, fecha, hora, sintomas].includes('')) {
+      console.log('Hay al menos un campo vacio')
+
+      setError(true)
+      return
+    }
+      
+      setError(false)
+
+        //objeto con los datos del paciente
+        const objetoPaciente = {
+          nombre,
+          propietario,
+          telefono,
+          fecha,
+          hora,
+          sintomas
+        }
+        console.log(objetoPaciente)
+      
+        //agregar el paciente al state
+        setPacientes([
+          ...pacientes,
+          objetoPaciente
+        ])
+
+        //reiniciar el formulario
+        setNombre('')
+        setPropietario('')
+        setTelefono('')
+        setFecha('')
+        setHora('')
+        setSintomas('')
+      } 
+  
+    
   return (
     <div className="w-1/2">
     <h2 className="text-3xl text-center">Seguimiento de pacientes</h2>
@@ -27,7 +60,10 @@ handleSubmit = (e) => {
     <p className="font-black text-lg mt-5 text-center mb-10">Añade pacientes y {''}
     <span className="text-indigo-600 font-bold">Administralos</span></p>
 
-    <form className="bg-white shadow-md rounded-lg py-10 px-5 mb-10">
+    <form 
+    onSubmit={handleSubmit}
+    className="bg-white shadow-md rounded-lg py-10 px-5 mb-10">
+    {error ? <p className="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 text-center mb-5">Todos los campos son obligatorios</p> : null}
     <div>
       <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="nombre">Nombre</label>
       <input className="shadow appearance-none border rounded 
@@ -37,7 +73,7 @@ handleSubmit = (e) => {
        type="text" 
        placeholder="Nombre del paciente"
        value={nombre}
-      onChange={(e) => setNombre(e.target.value)}
+       onChange={(e) => setNombre(e.target.value)}
        />
   
 
