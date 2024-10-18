@@ -1,26 +1,31 @@
 import { useState } from 'react'
 import { Header } from './components/Header'
 import { Formulario } from './components/Formulario'
-import { ListadoPacientes } from './components/ListadoPacientes'
+import { ListadoRequerimientos } from './components/ListadoRequerimientos'
 import './App.css'
 
 function App() {
 
-  const [pacientes, setPacientes] = useState([])
+  const [requerimientos, setRequerimientos] = useState([])
  
   return (
-    <div className="container mx-auto mt-20">
+    
+<div className="min-h-screen bg-gray-100">
+    <div className="container mx-auto mt-20">      
       <Header /> 
 
       <div className='mt-12 flex'>
+        
       <Formulario
-      pacientes={pacientes}
-      setPacientes={setPacientes}
+      requerimientos={requerimientos}
+      setRequerimientos={setRequerimientos}
        /> 
-      <ListadoPacientes
-        pacientes={pacientes}
+      <ListadoRequerimientos
+        requerimientos={requerimientos}
+        setRequerimientos={setRequerimientos}
        />   
       </div> 
+    </div>
     </div>
   )
 }
